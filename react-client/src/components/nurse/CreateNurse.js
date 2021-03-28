@@ -13,6 +13,7 @@ function CreateNurse() {
         username: '',
         password: '',
     });
+    const [username, setUsername] = useState('');
     const [showLoading, setShowLoading] = useState(false);
     const apiUrl = 'http://localhost:5000/api/';
 
@@ -22,7 +23,7 @@ function CreateNurse() {
         const data = {
             firstName: nurse.firstName,
             lastName: nurse.lastName,
-            username: nurse.username,
+            username: username,
             password: nurse.password,
         };
         axios
@@ -38,6 +39,9 @@ function CreateNurse() {
     const onChange = (e) => {
         e.persist();
         setNurse({ ...nurse, [e.target.name]: e.target.value });
+        const firstName = nurse.firstName.split(' ')[0].toLocaleLowerCase();
+        const lastName = nurse.lastName.split(' ')[0].toLocaleLowerCase();
+        setUsername(lastName + firstName);
     };
     return (
         <div>
@@ -78,8 +82,8 @@ function CreateNurse() {
                             id='username'
                             rows='3'
                             placeholder='Enter username'
-                            value={nurse.username}
-                            onChange={onChange}
+                            value={username}
+                            disabled={true}
                         />
                     </Form.Group>
                     <Form.Group>
