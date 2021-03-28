@@ -1,3 +1,5 @@
+var express = require('express');
+var router = express.Router();
 // Load the application controllers
 const indexController = require('../controllers/index.server.controller');
 const patientController = require('../controllers/patient.server.controller');
@@ -22,4 +24,13 @@ module.exports = function (app) {
         .post(nurseController.newNurse);
 
     app.route(NURSE_API + '/login').post(nurseController.authenticate);
+
+    //populate list of videos
+    app.route(PATIENT_API + '/videos')
+        .get(patientController.listVideos);
+        
+    app.route(PATIENT_API+'/videos/:videoId')
+        .get(patientController.showVideo);
+
+    app.param("videoId", patientController.videoById);
 };
