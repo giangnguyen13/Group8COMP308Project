@@ -1,5 +1,6 @@
 // Load the module dependencies
 const Patient = require('mongoose').model('Patient');
+const Video = require('mongoose').model('Video');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('../../config/config');
@@ -88,6 +89,18 @@ exports.list = function (req, res, next) {
             return res.status(500).json(err);
         } else {
             res.json(patients);
+        }
+    });
+};
+
+// Returns all videos in db
+exports.listVideos = function (req, res, next) {
+    // get all video in db, sort it by title in ascending order
+    Video.find().sort({title: "ascending"}).exec((err, videos) => {
+        if (err) {
+            return res.status(500).json(err);
+        } else {
+            res.json(videos);
         }
     });
 };

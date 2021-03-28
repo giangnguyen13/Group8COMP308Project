@@ -22,4 +22,10 @@ module.exports = function (app) {
         .post(nurseController.newNurse);
 
     app.route(NURSE_API + '/login').post(nurseController.authenticate);
+
+    //populate list of videos
+    app.route(PATIENT_API + '/videos')
+        .get(patientController.listVideos);
+
+    app.route('/videos/:title');
 };
