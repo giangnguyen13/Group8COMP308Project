@@ -104,3 +104,24 @@ exports.listVideos = function (req, res, next) {
         }
     });
 };
+
+// 'videoById' controller method to find a video by its id
+exports.videoById = function (req, res, next, id) {
+    Video.findById(id).populate('', 'title url').exec((err, video) => {
+        if (err) return next(err);
+    
+        if (!video) return next(new Error('Failed to load Video ' + id));
+        
+        req.video = video;
+        console.log('in videoById:', req.video.title);
+        console.log('in videoById:', req.video.url);
+        next();
+    });
+};
+
+exports.showVideo = function (req, res) {
+    console.log('show video');
+    const video = req.video;
+    console.log(video.title);
+    res.json(video);
+};
