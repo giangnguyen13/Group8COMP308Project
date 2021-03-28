@@ -8,7 +8,7 @@ const PATIENT_API = '/api/patient';
 module.exports = function (app) {
     //handle a get request made to root path
     app.get('/', indexController.render); //go to http://localhost:3000/
-
+    app.get('/logout', indexController.signout);
     app.route(PATIENT_API + 's')
         .get(patientController.list)
         .post(patientController.newPatient);

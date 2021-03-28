@@ -60,11 +60,6 @@ exports.authenticate = function (req, res, next) {
     });
 };
 
-exports.signout = (req, res) => {
-    res.clearCookie('token');
-    return res.status('200').json({ message: 'signed out' });
-};
-
 exports.isAuthenticated = function (req, res, next) {
     const token = req.cookies.token;
     if (!token) {

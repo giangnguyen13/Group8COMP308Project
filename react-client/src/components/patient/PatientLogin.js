@@ -30,7 +30,7 @@ function Login() {
                     sessionExpired.getTime()
                 );
 
-                console.log(isPatientAuthenticated());
+                window.location.href = '/patient/home';
             } else {
                 sessionStorage.clear();
             }
