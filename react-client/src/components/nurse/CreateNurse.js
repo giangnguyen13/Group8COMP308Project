@@ -6,11 +6,11 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { withRouter } from 'react-router-dom';
 
-function CreatePatient(props) {
-    const [patient, setPatient] = useState({
+function CreateNurse() {
+    const [nurse, setNurse] = useState({
         firstName: '',
         lastName: '',
-        email: '',
+        username: '',
         password: '',
     });
     const [showLoading, setShowLoading] = useState(false);
@@ -20,23 +20,24 @@ function CreatePatient(props) {
         setShowLoading(true);
         e.preventDefault();
         const data = {
-            firstName: patient.firstName,
-            lastName: patient.lastName,
-            email: patient.email,
-            password: patient.password,
+            firstName: nurse.firstName,
+            lastName: nurse.lastName,
+            username: nurse.username,
+            password: nurse.password,
         };
         axios
-            .post(apiUrl + 'patients', data)
+            .post(apiUrl + 'nurses', data)
             .then((result) => {
+                console.log('in save nurses');
                 setShowLoading(false);
-                window.location.href = '/patient/login';
+                window.location.href = '/nurse/login';
             })
             .catch((error) => setShowLoading(false));
     };
 
     const onChange = (e) => {
         e.persist();
-        setPatient({ ...patient, [e.target.name]: e.target.value });
+        setNurse({ ...nurse, [e.target.name]: e.target.value });
     };
     return (
         <div>
@@ -54,7 +55,7 @@ function CreatePatient(props) {
                             name='firstName'
                             id='firstName'
                             placeholder='Enter first name'
-                            value={patient.firstName}
+                            value={nurse.firstName}
                             onChange={onChange}
                         />
                     </Form.Group>
@@ -65,19 +66,19 @@ function CreatePatient(props) {
                             name='lastName'
                             id='lastName'
                             placeholder='Enter last name'
-                            value={patient.lastName}
+                            value={nurse.lastName}
                             onChange={onChange}
                         />
                     </Form.Group>
                     <Form.Group>
-                        <Form.Label>Email</Form.Label>
+                        <Form.Label>Username</Form.Label>
                         <Form.Control
                             type='text'
-                            name='email'
-                            id='email'
+                            name='username'
+                            id='username'
                             rows='3'
-                            placeholder='Enter email'
-                            value={patient.email}
+                            placeholder='Enter username'
+                            value={nurse.username}
                             onChange={onChange}
                         />
                     </Form.Group>
@@ -88,15 +89,15 @@ function CreatePatient(props) {
                             name='password'
                             id='password'
                             placeholder='Enter password'
-                            value={patient.password}
+                            value={nurse.password}
                             onChange={onChange}
                         />
                     </Form.Group>
                     <Button variant='success' type='submit'>
-                        Create patient
+                        Create nurse
                     </Button>
                     &nbsp;
-                    <Button variant='primary' href='/patient/login'>
+                    <Button variant='primary' href='/nurse/login'>
                         Have account? Login
                     </Button>
                 </Form>
@@ -105,4 +106,4 @@ function CreatePatient(props) {
     );
 }
 
-export default CreatePatient;
+export default CreateNurse;

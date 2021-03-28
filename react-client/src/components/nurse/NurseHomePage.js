@@ -2,18 +2,16 @@ import React from 'react';
 import { isUserAuthenticated } from '../../Helper';
 import { Redirect } from 'react-router-dom';
 
-function PatientHomePage() {
+function NurseHomePage() {
     return (
         <>
             {isUserAuthenticated() ? (
-                <div className='App'>
-                    This is authenticated route for patient
-                </div>
+                <div className='App'>This is authenticated route for nurse</div>
             ) : (
-                <Redirect to='/patient' />
+                <Redirect to='/nurse' />
             )}
         </>
     );
 }
 
-export default PatientHomePage;
+export default NurseHomePage;

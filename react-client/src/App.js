@@ -1,54 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
     Route,
     Redirect,
 } from 'react-router-dom';
-import axios from 'axios';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Button from 'react-bootstrap/Button';
+
 import './App.css';
 
 import Error from './components/Error';
-import { isPatientAuthenticated } from './Helper';
-import { isNurseAuthenticated } from './Helper';
+import { isUserAuthenticated } from './Helper';
 import AppNavbar from './components/AppNavbar';
+import IndexScreen from './components/IndexScreen';
+import NotLoginScreen from './components/NotLoginScreen';
 
 import PatientLogin from './components/patient/PatientLogin';
 import CreatePatient from './components/patient/CreatePatient';
 import PatientHomePage from './components/patient/PatientHomePage';
 
 import NurseLogin from './components/nurse/NurseLogin';
+import CreateNurse from './components/nurse/CreateNurse';
+import NurseHomePage from './components/nurse/NurseHomePage';
 
 const PATIENT_ROUTE_PREFIX = '/patient';
 const NURSE_ROUTE_PREFIX = '/nurse';
 
 function App() {
-    const [isLogin, setIsLogin] = useState(
-        isPatientAuthenticated() || isNurseAuthenticated()
-    );
+    const [isLogin, setIsLogin] = useState(isUserAuthenticated());
     return (
         <>
             <AppNavbar isLogin={isLogin} setIsLogin={setIsLogin} />
             <Router>
                 <Switch>
-                    <Route
-                        exact
-                        path='/'
-                        render={() => (
-                            <div className='App'>
-                                <h1>App route</h1>
-                            </div>
-                        )}
-                    />
+                    <Route exact path='/' render={() => <IndexScreen />} />
                     {/* Patient Route */}
                     <Route
                         exact
-                        render={() => (
-                            <h1>Hello Patient, you are not logged in</h1>
-                        )}
+                        render={() =>
+                            isUserAuthenticated() ? (
+                                <Redirect to={`${PATIENT_ROUTE_PREFIX}/home`} />
+                            ) : (
+                                <NotLoginScreen
+                                    route={`${PATIENT_ROUTE_PREFIX}/login`}
+                                    userRole='Patient'
+                                />
+                            )
+                        }
                         path={`${PATIENT_ROUTE_PREFIX}`}
                     />
                     <Route
@@ -69,9 +66,16 @@ function App() {
                     {/* Nurse Route */}
                     <Route
                         exact
-                        render={() => (
-                            <h1>Hello Nurse, you are not logged in</h1>
-                        )}
+                        render={() =>
+                            isUserAuthenticated() ? (
+                                <Redirect to={`${NURSE_ROUTE_PREFIX}/home`} />
+                            ) : (
+                                <NotLoginScreen
+                                    route={`${NURSE_ROUTE_PREFIX}/login`}
+                                    userRole='Nurse'
+                                />
+                            )
+                        }
                         path={`${NURSE_ROUTE_PREFIX}`}
                     />
                     <Route
@@ -81,14 +85,16 @@ function App() {
                     />
                     <Route
                         exact
-                        render={() => <CreatePatient />}
+                        render={() => <CreateNurse />}
                         path={`${NURSE_ROUTE_PREFIX}/create`}
                     />
                     <Route
                         exact
-                        render={() => <PatientHomePage />}
+                        render={() => <NurseHomePage />}
                         path={`${NURSE_ROUTE_PREFIX}/home`}
                     />
+
+                    {/* Default route -> Render 404 Error page */}
                     <Route path='*' render={() => <Error />} />
                 </Switch>
             </Router>

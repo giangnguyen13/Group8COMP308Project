@@ -3,7 +3,7 @@
  *
  * @return bool
  */
-export function isPatientAuthenticated() {
+export function isUserAuthenticated() {
     const cookieExpire = sessionStorage.getItem('cookieExpire');
     const COOKIE_EXPIRE_MINS = 5;
     if (cookieExpire != undefined) {
@@ -18,13 +18,4 @@ export function isPatientAuthenticated() {
     } else {
         return false;
     }
-}
-
-/**
- * Check whether the user is authenticated
- *
- * @return bool
- */
-export function isNurseAuthenticated() {
-    return false;
 }

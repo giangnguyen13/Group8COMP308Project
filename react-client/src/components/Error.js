@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function Error() {
     return (
         <div className='App'>
-            <h1>Error Page</h1>
+            <h1>Oops.! Look like you get lost</h1>
             <Link to='/' className='btn btn-success'>
                 Back Home
             </Link>
