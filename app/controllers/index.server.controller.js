@@ -9,3 +9,8 @@ exports.render = function (req, res) {
         title: 'Express REST API',
     });
 };
+
+exports.signout = (req, res) => {
+    res.clearCookie('token');
+    return res.status('200').json({ message: 'signed out' });
+};
