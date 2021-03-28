@@ -10,32 +10,27 @@ function VideoList() {
   const [isLoading, setLoading] = useState(true);
   const [videolist, setVideolist] = useState([]);
   const [currentVideoEmbedId, setCurrentVideoEmdedId] = useState("");
-  const apiUrl = "http://localhost:5000/api/patient/videolist";
-
-  const tempVideoList = [
-    { title: "title1", link: `DsFLMrXSJNg` },
-    { title: "title2", link: `CfPxlb8-ZQ0` },
-    { title: "title3", link: `DsFLMrXSJNg` },
-  ];
+  const apiUrl = "http://localhost:5000/api/patient/videos";
 
   useEffect(() => {
     axios
       .get(apiUrl)
       .then((res) => {
-        console.log(res.data.videolist);
-        setVideolist(res.data.videolist);
+        console.log(res);
+        setVideolist(res.data);
         setLoading(false);
       })
       .catch((err) => {
-        setVideolist(tempVideoList);
+        // setVideolist(tempVideoList);
         console.log(err);
         setLoading(false);
       });
   }, []);
 
-  const playVideo = (link) => {
+  const playVideo = (url) => {
     console.log("playVideo");
-    setCurrentVideoEmdedId(link);
+    console.log(url);
+    setCurrentVideoEmdedId(url);
   };
 
   if (isLoading) {
@@ -48,7 +43,7 @@ function VideoList() {
   return (
     <>
       {currentVideoEmbedId != "" && (
-        <VideoPlayer embedId={currentVideoEmbedId} />
+        <VideoPlayer linkId={currentVideoEmbedId} />
       )}
       <ListGroup>
         {videolist.map((item, idx) => (
@@ -56,7 +51,7 @@ function VideoList() {
             key={idx}
             action
             onClick={() => {
-              playVideo(item.link);
+              playVideo(item.url);
             }}
           >
             {item.title}
