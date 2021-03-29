@@ -1,8 +1,0 @@
-db.videos.insert(
-   [
-     { title: "Cardiac Rehabilitation Exercises" , url: "Ohm56pv85A0" },
-     { title: "Back + Core Home Rehab Pt.1" , url: "dNGKuxYs0pI" },
-     { title: "10 Best Rotator Cuff Exercises for Strengthening" , url: "6u8QpNmQy_g" },
-     {title: "Cardiac Rehab: Home Exercise Programme", url: "vbCkEGJDhx4"}
-   ]
-)
