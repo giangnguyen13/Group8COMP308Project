@@ -26,11 +26,14 @@ module.exports = function (app) {
     app.route(NURSE_API + '/login').post(nurseController.authenticate);
 
     //populate list of videos
-    app.route(PATIENT_API + '/videos')
-        .get(patientController.listVideos);
-        
-    app.route(PATIENT_API+'/videos/:videoId')
-        .get(patientController.showVideo);
+    app.route(PATIENT_API + '/videos').get(patientController.listVideos);
 
-    app.param("videoId", patientController.videoById);
+    app.route(PATIENT_API + '/videos/:videoId').get(
+        patientController.showVideo
+    );
+
+    app.param('videoId', patientController.videoById);
+    app.route(NURSE_API + '/tip')
+        .get(nurseController.getListMotivationalTip)
+        .post(nurseController.createMotivationalTip);
 };

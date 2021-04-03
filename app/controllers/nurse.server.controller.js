@@ -1,5 +1,6 @@
 // Load the module dependencies
 const Nurse = require('mongoose').model('Nurse');
+const MotivationalTip = require('mongoose').model('MotivationalTip');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('../../config/config');
@@ -86,6 +87,46 @@ exports.list = function (req, res, next) {
             return res.status(500).json(err);
         } else {
             res.json(nurses);
+        }
+    });
+};
+
+exports.createMotivationalTip = function (req, res) {
+    let data = {
+        ...req.body,
+    };
+    var newMotivationalTip = new MotivationalTip(data);
+
+    newMotivationalTip.save(function (err) {
+        if (err) {
+            console.log(err);
+            return res.status(500).json(err);
+        } else {
+            res.status(200).json(newMotivationalTip);
+        }
+    });
+};
+
+exports.getListMotivationalTip = function (req, res) {
+    var now = new Date();
+    var startOfToday = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate()
+    );
+    let patientname = req.query.patientname;
+    const query = {
+        created: { $gte: startOfToday },
+        receiver: {
+            $in: ['ALL', patientname],
+        },
+    };
+
+    MotivationalTip.find(query, function (err, tips) {
+        if (err) {
+            return res.status(500).json(err);
+        } else {
+            res.status(200).json(tips);
         }
     });
 };
