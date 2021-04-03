@@ -6,18 +6,28 @@ import AlertDismissible from '../AlertDismissible';
 
 function PatientHomePage() {
     const [tipList, setTipList] = useState([]);
-    const patientName = sessionStorage
-        .getItem('patientName')
-        .replaceAll(' ', '%20');
-
+    const patientName = sessionStorage.getItem('patientName');
     useEffect(() => {
-        const apiUrl = `http://localhost:5000/api/nurse/tip?patientname=${patientName}`;
-        axios
-            .get(apiUrl)
-            .then((result) => {
-                setTipList(result.data);
-            })
-            .catch((error) => console.log('error'));
+        if (patientName) {
+            const apiUrl = `http://localhost:5000/api/nurse/tip?patientname=${patientName.replaceAll(
+                ' ',
+                '%20'
+            )}`;
+            axios
+                .get(apiUrl)
+                .then((result) => {
+                    setTipList(result.data);
+                })
+                .catch((error) => console.log('error'));
+        } else {
+            const apiUrl = `http://localhost:5000/api/nurse/tip`;
+            axios
+                .get(apiUrl)
+                .then((result) => {
+                    setTipList(result.data);
+                })
+                .catch((error) => console.log('error'));
+        }
     }, []);
     return (
         <>
