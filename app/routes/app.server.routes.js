@@ -22,4 +22,7 @@ module.exports = function (app) {
         .post(nurseController.newNurse);
 
     app.route(NURSE_API + '/login').post(nurseController.authenticate);
+    app.route(NURSE_API + '/tip')
+        .get(nurseController.getListMotivationalTip)
+        .post(nurseController.createMotivationalTip);
 };

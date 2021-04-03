@@ -19,7 +19,7 @@ function Login() {
 
             if (res.status === 200) {
                 // maintain session in client
-                sessionStorage.setItem('patientName', res.data.fullName);
+                sessionStorage.setItem('patientName', res.data.patientName);
                 sessionStorage.setItem('patientId', res.data.patientId);
                 var sessionCreated = new Date();
                 var sessionExpired = new Date(
