@@ -12,7 +12,6 @@ function Login() {
     const apiUrl = 'http://localhost:5000/api/patient/login';
 
     const auth = async () => {
-        console.log('btn click');
         try {
             const loginData = { auth: { email, password } };
             const res = await axios.post(apiUrl, loginData);
