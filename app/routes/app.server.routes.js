@@ -33,4 +33,7 @@ module.exports = function (app) {
         .get(patientController.showVideo);
 
     app.param("videoId", patientController.videoById);
+
+    app.get("/run", patientController.trainAndPredict);
+
 };
