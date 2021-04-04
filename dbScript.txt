@@ -5,4 +5,4 @@ db.videos.insert(
      { title: "10 Best Rotator Cuff Exercises for Strengthening" , url: "6u8QpNmQy_g" },
      {title: "Cardiac Rehab: Home Exercise Programme", url: "vbCkEGJDhx4"}
    ]
-)
+) 
