@@ -4,9 +4,6 @@ import Spinner from 'react-bootstrap/Spinner';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownMultiselect from 'react-multiselect-dropdown-bootstrap';
 
 function CreateTip() {
     const [tip, setTip] = useState({
