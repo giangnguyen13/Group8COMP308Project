@@ -12,14 +12,13 @@ function Login() {
     const apiUrl = 'http://localhost:5000/api/patient/login';
 
     const auth = async () => {
-        console.log('btn click');
         try {
             const loginData = { auth: { email, password } };
             const res = await axios.post(apiUrl, loginData);
 
             if (res.status === 200) {
                 // maintain session in client
-                sessionStorage.setItem('patientName', res.data.fullName);
+                sessionStorage.setItem('patientName', res.data.patientName);
                 sessionStorage.setItem('patientId', res.data.patientId);
                 var sessionCreated = new Date();
                 var sessionExpired = new Date(
