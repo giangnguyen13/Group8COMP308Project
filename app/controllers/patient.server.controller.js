@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const config = require("../../config/config");
 const jwtExpirySeconds = 300;
 const jwtKey = config.secretKey;
+var C45 = require('c4.5');
 
 exports.newPatient = function (req, res) {
   let data = {
@@ -133,71 +134,16 @@ exports.showVideo = function (req, res) {
 };
 
 
+exports.diagnose = function (req, res) {
+  var c45 = C45();
+  var state = require('../../decision-tree-model.json');
+  c45.restore(state);
+  var model = c45.getModel();
+  var testData = [
+    ['TRUE','TRUE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','TRUE','FALSE','FALSE','FALSE','TRUE','FALSE','FALSE','FALSE','FALSE','FALSE','TRUE','FALSE','FALSE','FALSE','TRUE','FALSE','FALSE','FALSE','FALSE','FALSE','TRUE','FALSE','FALSE','FALSE','FALSE','FALSE','TRUE','TRUE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','TRUE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE']
 
-var fs = require('fs');
-var csv = require('csv');
-var C45 = require('c4.5');
+  ];
+console.log(model.classify(testData[0])); // 'CLASS1'
 
-exports.trainAndPredict = function (req, res) {
-  
-  console.log("in trainAndPredict?");
-  fs.readFile('trainingset.csv', function(err, data) {
-    if (err) {
-      console.log("err1");
-      console.error(err);
-      return false;
-    }
-   
-    csv.parse(data, function(err, data) {
-      if (err) {
-        console.log("err2");
-        console.error(err);
-        return false;
-      }
-   
-      var headers = data[0];
-      console.log(headers.length);
-      var features = headers.slice(1, -1); // 
-      console.log('feature.length:',features.length);
-      console.log(features);
-      var featureTypes = Array(133).fill('category');
-     
-      var trainingData = data.slice(1).map(function(d) {
-        return d.slice(1);
-      });
-      var target = headers[headers.length-1]; // "disease"
-      var c45 = C45();
-   
-      c45.train({
-          data: trainingData,
-          target: target,
-          features: features,
-          featureTypes: featureTypes
-      }, function(error, model) {
-        if (error) {
-          console.log('error3');
-          console.error(error);
-          return false;
-        }
-   
-        var testData = [
-          ['FALSE','FALSE','FALSE','TRUE','TRUE','TRUE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE']
-
-        ];
-
-        
-
-        // var testDataStr = testData[0].map(e=>{
-        //   e == 1 ? 'TRUE': 'FALSE';
-        // })
-         console.log(testData.length);
-         console.log(testData);
-
-        var model = c45.getModel();
-        console.log(model.classify(testData[0]));
-
-      });
-    });
-  });
 }
 

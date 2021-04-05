@@ -4,6 +4,7 @@ var router = express.Router();
 const indexController = require('../controllers/index.server.controller');
 const patientController = require('../controllers/patient.server.controller');
 const nurseController = require('../controllers/nurse.server.controller');
+const trainController = require('../controllers/train_model.server.controller');
 
 const PATIENT_API = '/api/patient';
 const NURSE_API = '/api/nurse';
@@ -34,10 +35,12 @@ module.exports = function (app) {
 
     app.param("videoId", patientController.videoById);
 
-    app.get("/run", patientController.trainAndPredict);
-
+    app.get("/run", patientController.diagnose);
 
     app.route(NURSE_API + '/tip')
         .get(nurseController.getListMotivationalTip)
         .post(nurseController.createMotivationalTip);
+
+    app.route("/train")
+        .get(trainController.trainModel);
 };
