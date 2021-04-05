@@ -1,12 +1,15 @@
 import React from 'react';
 import { isUserAuthenticated } from '../../Helper';
 import { Redirect } from 'react-router-dom';
+import CreateTip from './CreateTip';
 
 function NurseHomePage() {
     return (
         <>
             {isUserAuthenticated() ? (
-                <div className='App'>This is authenticated route for nurse</div>
+                <div className='App'>
+                    <CreateTip />
+                </div>
             ) : (
                 <Redirect to='/nurse' />
             )}

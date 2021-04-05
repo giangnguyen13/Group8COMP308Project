@@ -36,4 +36,8 @@ module.exports = function (app) {
 
     app.get("/run", patientController.trainAndPredict);
 
+
+    app.route(NURSE_API + '/tip')
+        .get(nurseController.getListMotivationalTip)
+        .post(nurseController.createMotivationalTip);
 };
