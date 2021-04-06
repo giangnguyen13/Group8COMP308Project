@@ -133,17 +133,37 @@ exports.showVideo = function (req, res) {
   res.json(video);
 };
 
+//populate checkList page to the patient
+exports.checkList = function(req,res){
+  const symptoms = require("../../symptoms.json"); // list of symptoms
+  res.render('checklist', { 
+    title:"checklist", symptoms:symptoms});	
 
-exports.diagnose = function (req, res) {
+}
+
+exports.diagnose = function (req, res, next) {
+  console.log('in diagnose');
+  
+  var testData = Array(133).fill('FALSE');
+  
+  for(var data in req.body) {
+    console.log(data);
+    if(!isNaN(data))
+    {
+        testData[data-1]='TRUE';
+    }
+  }
+  console.log(testData);
+
+  
   var c45 = C45();
   var state = require('../../decision-tree-model.json');
   c45.restore(state);
   var model = c45.getModel();
-  var testData = [
-    ['TRUE','TRUE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','TRUE','FALSE','FALSE','FALSE','TRUE','FALSE','FALSE','FALSE','FALSE','FALSE','TRUE','FALSE','FALSE','FALSE','TRUE','FALSE','FALSE','FALSE','FALSE','FALSE','TRUE','FALSE','FALSE','FALSE','FALSE','FALSE','TRUE','TRUE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','TRUE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE','FALSE']
-
-  ];
-console.log(model.classify(testData[0])); // 'CLASS1'
+  
+console.log(model.classify(testData)); // 'CLASS1'
 
 }
+
+
 

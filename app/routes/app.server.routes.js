@@ -35,7 +35,7 @@ module.exports = function (app) {
 
     app.param("videoId", patientController.videoById);
 
-    app.get("/run", patientController.diagnose);
+    app.get("/run", patientController.diagnose); /////////////////////// might delete
 
     app.route(NURSE_API + '/tip')
         .get(nurseController.getListMotivationalTip)
@@ -43,4 +43,9 @@ module.exports = function (app) {
 
     app.route("/train")
         .get(trainController.trainModel);
+    
+    app.route(PATIENT_API+'/checklist')
+        .get(patientController.checkList)
+        .post(patientController.diagnose);
+
 };
