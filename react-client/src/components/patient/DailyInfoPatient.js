@@ -6,6 +6,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { apiUrl } from "../../Helper";
+
 function DailyInfo() {
   const [dailyInfo, setDailyInfo] = useState({
     pulseRate: "",
@@ -25,10 +26,10 @@ function DailyInfo() {
     };
 
     axios
-      .post(`${apiUrl}/dailyInfo`, data)
+      .post(`${apiUrl}patient/dailyInfo`, data)
       .then((res) => {
         console.log(res);
-        window.location.href = "/patient/login";
+        window.location.href = "/";
       })
       .catch((err) => {
         console.log(err);

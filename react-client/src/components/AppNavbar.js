@@ -107,6 +107,13 @@ function AppNavbar(props) {
               <Nav.Link href={`${homeRoute}/checklist`}>Check List</Nav.Link>
             </>
           )}
+          {isNurse && (
+            <>
+              <Nav.Link href={`${homeRoute}/listPatients`}>
+                List of Patients
+              </Nav.Link>
+            </>
+          )}
         </Nav>
         {!isLogin ? (
           <>
