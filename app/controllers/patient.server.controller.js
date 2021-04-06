@@ -97,7 +97,6 @@ exports.list = function (req, res, next) {
 
 exports.listAllDailyInfoById = function (req, res, next, patientId) {
   var query = { patient: patientId };
-  console.log(patientId);
 
   DailyInfo.find(query, function (err, dailyInfos) {
     if (err) {

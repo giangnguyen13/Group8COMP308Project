@@ -7,7 +7,10 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { apiUrl } from "../../Helper";
 
-function DailyInfo() {
+function DailyInfo(props) {
+  
+  const patientID = sessionStorage.getItem("patientId");
+
   const [dailyInfo, setDailyInfo] = useState({
     pulseRate: "",
     bloodPressure: "",
@@ -23,10 +26,11 @@ function DailyInfo() {
       weight: dailyInfo.weight,
       temperature: dailyInfo.temperature,
       respiratoryRate: dailyInfo.respiratoryRate,
+      patient: patientID
     };
 
     axios
-      .post(`${apiUrl}patient/dailyInfo`, data)
+      .post(`${apiUrl}dailyInfo`, data)
       .then((res) => {
         console.log(res);
         window.location.href = "/";

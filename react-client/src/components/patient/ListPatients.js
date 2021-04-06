@@ -28,9 +28,11 @@ function ListPatients(props) {
         fetchData();
     }, []);
 
-    const showDetail = (patientId) => {
+    const showDetail = (patientID) => {
+        sessionStorage.setItem('patientId', patientID);
+
         props.history.push({
-            pathname: 'nurse/listAllDailyInfoById/' + patientId,
+            pathname: '/nurse/listAllDailyInfoById/' + patientID,
         });
     };
     

@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import { apiUrl } from "../../Helper";
+import DailyInfoNurse from "./DailyInfo";
 
 
 function ListDailyInfo(props) {
@@ -29,12 +30,6 @@ function ListDailyInfo(props) {
         };
         fetchData();
     }, []);
-
-    const enterVitalSigns = () => {
-        props.history.push({
-            pathname: 'nurse/dailyInfo/'+patientID,
-        });
-    };
     
     return (
         <div>
@@ -43,8 +38,8 @@ function ListDailyInfo(props) {
                     <span className='sr-only'>Loading...</span>
                 </Spinner>
             )}
-            <div class="text-center">
-                <button class="btn btn-success" type="submit" onClick={() => { enterVitalSigns()}}>Enter Today's Vital Signs</button>
+            <div className="text-center">
+                <a className="btn btn-success" href={'/nurse/dailyInfo'}>Enter Today's Vital Signs</a> 
                 <br></br>
                 <br></br>
                 {data.map((item, idx) => (

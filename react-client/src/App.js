@@ -18,8 +18,7 @@ import PatientLogin from "./components/patient/PatientLogin";
 import CreatePatient from "./components/patient/CreatePatient";
 import PatientHomePage from "./components/patient/PatientHomePage";
 import VideoList from "./components/patient/VideoList";
-import DailyInfoPatient from "./components/patient/DailyInfoPatient";
-import DailyInfoNurse from "./components/patient/DailyInfoNurse";
+import DailyInfo from "./components/patient/DailyInfo";
 import CheckList from "./components/patient/CheckList";
 
 import NurseLogin from "./components/nurse/NurseLogin";
@@ -97,7 +96,7 @@ function App() {
             exact
             render={() =>
               isUserAuthenticated() ? (
-                <DailyInfoPatient />
+                <DailyInfo />
               ) : (
                 <NotLoginScreen route={`${PATIENT_ROUTE_PREFIX}/login`} />
               )
@@ -134,12 +133,12 @@ function App() {
             exact
             render={() =>
               isUserAuthenticated() ? (
-                <DailyInfoNurse />
+                <DailyInfo />
               ) : (
                 <NotLoginScreen route={`${NURSE_ROUTE_PREFIX}/login`} />
               )
             }
-            path={`${NURSE_ROUTE_PREFIX}/dailyInfo/:patientId`}
+            path={`${NURSE_ROUTE_PREFIX}/dailyInfo`}
           />
           <Route
             exact

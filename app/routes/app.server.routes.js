@@ -9,6 +9,7 @@ const dailyInfoController = require('../controllers/daily_Info.server.controller
 
 const PATIENT_API = '/api/patient';
 const NURSE_API = '/api/nurse';
+const API = '/api';
 
 // Define the routes module' method
 module.exports = function (app) {
@@ -39,13 +40,9 @@ module.exports = function (app) {
         .get(nurseController.getListMotivationalTip)
         .post(nurseController.createMotivationalTip);
 
-    app.route(PATIENT_API + '/dailyInfo')
-    .post(dailyInfoController.saveDailyInfoPatient);
+    app.route(API + '/dailyInfo')
+    .post(dailyInfoController.saveDailyInfo);
     
-    app.param('patientId', dailyInfoController.saveDailyInfoNurse);
-    app.route(NURSE_API + '/dailyInfo/:patientId')
-    .post(dailyInfoController.saveDailyInfoNurse);
-
     app.route(NURSE_API + '/listPatients')
         .get(patientController.list);
     
