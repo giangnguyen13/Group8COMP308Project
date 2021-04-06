@@ -1,6 +1,7 @@
 // Load the module dependencies
 const Patient = require("mongoose").model("Patient");
 const Video = require("mongoose").model("Video");
+const Diagnosis = require("mongoose").model("Diagnose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("../../config/config");
@@ -96,7 +97,7 @@ exports.list = function (req, res, next) {
 
 // Returns all videos in db
 exports.listVideos = function (req, res, next) {
-  console.log("listVideos called");
+  
   // get all video in db, sort it by title in ascending order
   Video.find()
     .sort({ title: "ascending" })
@@ -104,7 +105,6 @@ exports.listVideos = function (req, res, next) {
       if (err) {
         return res.status(500).json(err);
       } else {
-        console.log(videos);
         res.json(videos);
       }
     });
@@ -120,8 +120,6 @@ exports.videoById = function (req, res, next, id) {
       if (!video) return next(new Error("Failed to load Video " + id));
 
       req.video = video;
-      console.log("in videoById:", req.video.title);
-      console.log("in videoById:", req.video.url);
       next();
     });
 };
@@ -142,8 +140,7 @@ exports.checkList = function(req,res){
 }
 
 exports.diagnose = function (req, res, next) {
-  console.log('in diagnose');
-  
+    
   var testData = Array(133).fill('FALSE');
   
   for(var data in req.body) {
@@ -153,15 +150,30 @@ exports.diagnose = function (req, res, next) {
         testData[data-1]='TRUE';
     }
   }
-  console.log(testData);
-
   
   var c45 = C45();
   var state = require('../../decision-tree-model.json');
   c45.restore(state);
   var model = c45.getModel();
   
-console.log(model.classify(testData)); // 'CLASS1'
+  var result = model.classify(testData);
+  console.log(result);
+  if(result=='unknown') {
+    res.json('unknown');
+  }
+  else {
+    var testDisease = new Diagnosis({disease:"test"});
+    testDisease.save();
+    Diagnosis.findOne({ disease: result }, (err, disease) => {
+      if (err) {
+        return next(err);
+      } else {
+        console.log(disease)
+        var jsonDisease = JSON.parse(JSON.stringify(disease));            
+        res.json(jsonDisease);
+      }
+    });
+  }
 
 }
 

@@ -35,8 +35,6 @@ module.exports = function (app) {
 
     app.param("videoId", patientController.videoById);
 
-    app.get("/run", patientController.diagnose); /////////////////////// might delete
-
     app.route(NURSE_API + '/tip')
         .get(nurseController.getListMotivationalTip)
         .post(nurseController.createMotivationalTip);
