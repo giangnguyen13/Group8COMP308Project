@@ -7,9 +7,10 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { apiUrl } from "../../Helper";
 
-function DailyInfo(props) {
+function DailyInfo() {
   
   const patientID = sessionStorage.getItem("patientId");
+  const created_by = sessionStorage.getItem("created_by");
 
   const [dailyInfo, setDailyInfo] = useState({
     pulseRate: "",
@@ -26,7 +27,8 @@ function DailyInfo(props) {
       weight: dailyInfo.weight,
       temperature: dailyInfo.temperature,
       respiratoryRate: dailyInfo.respiratoryRate,
-      patient: patientID
+      patient: patientID,
+      created_by: created_by
     };
 
     axios

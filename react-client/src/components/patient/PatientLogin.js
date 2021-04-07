@@ -20,6 +20,7 @@ function Login() {
                 // maintain session in client
                 sessionStorage.setItem('patientName', res.data.patientName);
                 sessionStorage.setItem('patientId', res.data.patientId);
+                sessionStorage.setItem('created_by', res.data.patientName);
 
                 var sessionCreated = new Date();
                 var sessionExpired = new Date(

@@ -21,6 +21,9 @@ const DailyInfoSchema = new Schema({
         type: Date,
         default: Date.now,
     },
+    created_by: {
+        type: String,
+    },
     updated: {
         type: Date,
         default: Date.now,

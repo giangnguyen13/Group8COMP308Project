@@ -49,6 +49,7 @@ function ListDailyInfo(props) {
                         <div>{'Weight: ' + item.weight}</div>
                         <div>{'Temperature: ' + item.temperature}</div>
                         <div>{'Respiratory Rate: ' + item.respiratoryRate}</div>
+                        <div>{'Created By: ' + item.created_by}</div>
                         <div>{'Created: ' + item.created}</div>
                         <br></br>
                     </div>                        
