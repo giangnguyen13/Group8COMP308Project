@@ -47,6 +47,6 @@ module.exports = function (app) {
         .get(patientController.list);
     
     app.param('patientId', patientController.listAllDailyInfoById);
-    app.route(NURSE_API + '/listAllDailyInfoById/:patientId')
+    app.route(API + '/listAllDailyInfoById/:patientId')
     .get(patientController.listAllDailyInfoById)
 };

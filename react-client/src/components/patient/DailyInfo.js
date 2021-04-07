@@ -9,6 +9,13 @@ import { apiUrl } from "../../Helper";
 
 function DailyInfo() {
   
+  const currentUrl = window.location.pathname;
+  let homeRoute = currentUrl.includes("/patient")
+  ? "/patient"
+  : currentUrl.includes("/nurse")
+  ? "/nurse"
+  : "/";
+  
   const patientID = sessionStorage.getItem("patientId");
   const created_by = sessionStorage.getItem("created_by");
 
@@ -35,7 +42,7 @@ function DailyInfo() {
       .post(`${apiUrl}dailyInfo`, data)
       .then((res) => {
         console.log(res);
-        window.location.href = "/";
+        window.location.href = `${homeRoute}/home`;
       })
       .catch((err) => {
         console.log(err);
@@ -106,7 +113,7 @@ function DailyInfo() {
             />
           </Form.Group>
           <Button variant="success" type="submit">
-            Create patient
+            Create Vital Signs
           </Button>
         </Form>
       </Jumbotron>

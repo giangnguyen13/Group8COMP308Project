@@ -107,6 +107,19 @@ function App() {
             exact
             render={() =>
               isUserAuthenticated() ? (
+                <ListDailyInfo />
+              ) : (
+                <NotLoginScreen
+                  route={`${PATIENT_ROUTE_PREFIX}/login`}
+                />
+              )
+            }
+            path={`${PATIENT_ROUTE_PREFIX}/listAllDailyInfoById/:patientId`}
+          />
+          <Route
+            exact
+            render={() =>
+              isUserAuthenticated() ? (
                 <CheckList />
               ) : (
                 <NotLoginScreen route={`${PATIENT_ROUTE_PREFIX}/login`} />

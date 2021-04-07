@@ -4,20 +4,25 @@ import Spinner from 'react-bootstrap/Spinner';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { withRouter, Redirect } from 'react-router-dom';
 import { apiUrl } from "../../Helper";
-import DailyInfoNurse from "./DailyInfo";
-
 
 function ListDailyInfo(props) {
     const [data, setData] = useState([]);
     const [showLoading, setShowLoading] = useState(true);
     const [listError, setListError] = useState(false);
+    
+    const currentUrl = window.location.pathname;
+    let homeRoute = currentUrl.includes("/patient")
+    ? "/patient"
+    : currentUrl.includes("/nurse")
+    ? "/nurse"
+    : "/";
 
     const patientID = props.match.params.patientId;
 
     useEffect(() => {
         const fetchData = async () => {
             axios
-                .get(apiUrl + `nurse/listAllDailyInfoById/${patientID}`)
+                .get(apiUrl + `listAllDailyInfoById/${patientID}`)
                 .then((result) => {
                     console.log('result.data:', result.data);
                     setShowLoading(false);
@@ -39,7 +44,7 @@ function ListDailyInfo(props) {
                 </Spinner>
             )}
             <div className="text-center">
-                <a className="btn btn-success" href={'/nurse/dailyInfo'}>Enter Today's Vital Signs</a> 
+                <a className="btn btn-success" href={`${homeRoute}/dailyInfo`}>Enter Today's Vital Signs</a> 
                 <br></br>
                 <br></br>
                 {data.map((item, idx) => (
@@ -49,7 +54,7 @@ function ListDailyInfo(props) {
                         <div>{'Weight: ' + item.weight}</div>
                         <div>{'Temperature: ' + item.temperature}</div>
                         <div>{'Respiratory Rate: ' + item.respiratoryRate}</div>
-                        <div>{'Created By: ' + item.created_by}</div>
+                        <div>{'Created By ' + item.created_by}</div>
                         <div>{'Created: ' + item.created}</div>
                         <br></br>
                     </div>                        
