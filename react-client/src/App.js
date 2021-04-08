@@ -25,6 +25,9 @@ import NurseLogin from "./components/nurse/NurseLogin";
 import CreateNurse from "./components/nurse/CreateNurse";
 import NurseHomePage from "./components/nurse/NurseHomePage";
 import Emergency from "./components/patient/Emergency";
+import ListPatients from "./components/patient/ListPatients";
+import ListDailyInfo from "./components/patient/ListDailyInfo";
+
 
 const PATIENT_ROUTE_PREFIX = "/patient";
 const NURSE_ROUTE_PREFIX = "/nurse";
@@ -104,6 +107,19 @@ function App() {
             exact
             render={() =>
               isUserAuthenticated() ? (
+                <ListDailyInfo />
+              ) : (
+                <NotLoginScreen
+                  route={`${PATIENT_ROUTE_PREFIX}/login`}
+                />
+              )
+            }
+            path={`${PATIENT_ROUTE_PREFIX}/listAllDailyInfoById/:patientId`}
+          />
+          <Route
+            exact
+            render={() =>
+              isUserAuthenticated() ? (
                 <CheckList />
               ) : (
                 <NotLoginScreen route={`${PATIENT_ROUTE_PREFIX}/login`} />
@@ -112,6 +128,45 @@ function App() {
             path={`${PATIENT_ROUTE_PREFIX}/checklist`}
           />
           {/* Nurse Route */}
+          <Route
+            exact
+            render={() =>
+              isUserAuthenticated() ? (
+                <ListPatients />
+              ) : (
+                <NotLoginScreen
+                  route={`${NURSE_ROUTE_PREFIX}/login`}
+                  userRole="Nurse"
+                />
+              )
+            }
+            path={`${NURSE_ROUTE_PREFIX}/listPatients`}
+          />
+          <Route
+            exact
+            render={() =>
+              isUserAuthenticated() ? (
+                <DailyInfo />
+              ) : (
+                <NotLoginScreen route={`${NURSE_ROUTE_PREFIX}/login`} />
+              )
+            }
+            path={`${NURSE_ROUTE_PREFIX}/dailyInfo`}
+          />
+          <Route
+            exact
+            render={() =>
+              isUserAuthenticated() ? (
+                <ListDailyInfo />
+              ) : (
+                <NotLoginScreen
+                  route={`${NURSE_ROUTE_PREFIX}/login`}
+                  userRole="Nurse"
+                />
+              )
+            }
+            path={`${NURSE_ROUTE_PREFIX}/listAllDailyInfoById/:patientId`}
+          />
           <Route
             exact
             render={() =>
@@ -126,6 +181,7 @@ function App() {
             }
             path={`${NURSE_ROUTE_PREFIX}`}
           />
+
           <Route
             exact
             render={() => <NurseLogin />}

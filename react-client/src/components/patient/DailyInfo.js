@@ -6,7 +6,19 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { apiUrl } from "../../Helper";
+
 function DailyInfo() {
+  
+  const currentUrl = window.location.pathname;
+  let homeRoute = currentUrl.includes("/patient")
+  ? "/patient"
+  : currentUrl.includes("/nurse")
+  ? "/nurse"
+  : "/";
+  
+  const patientID = sessionStorage.getItem("patientId");
+  const created_by = sessionStorage.getItem("created_by");
+
   const [dailyInfo, setDailyInfo] = useState({
     pulseRate: "",
     bloodPressure: "",
@@ -22,13 +34,15 @@ function DailyInfo() {
       weight: dailyInfo.weight,
       temperature: dailyInfo.temperature,
       respiratoryRate: dailyInfo.respiratoryRate,
+      patient: patientID,
+      created_by: created_by
     };
 
     axios
-      .post(`${apiUrl}/dailyInfo`, data)
+      .post(`${apiUrl}dailyInfo`, data)
       .then((res) => {
         console.log(res);
-        window.location.href = "/patient/login";
+        window.location.href = `${homeRoute}/home`;
       })
       .catch((err) => {
         console.log(err);
@@ -99,7 +113,7 @@ function DailyInfo() {
             />
           </Form.Group>
           <Button variant="success" type="submit">
-            Create patient
+            Create Vital Signs
           </Button>
         </Form>
       </Jumbotron>
