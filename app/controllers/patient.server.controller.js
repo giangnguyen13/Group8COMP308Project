@@ -173,7 +173,7 @@ exports.diagnose = function (req, res, next) {
   var result = model.classify(testData);
   console.log(result);
   if(result=='unknown') {
-    res.json('unknown');
+    res.json(null);
   }
   else {
     Diagnosis.findOne({ disease: result }, (err, disease) => {
