@@ -162,8 +162,6 @@ exports.diagnose = function (req, res, next) {
     res.json('unknown');
   }
   else {
-    var testDisease = new Diagnosis({disease:"test"});
-    testDisease.save();
     Diagnosis.findOne({ disease: result }, (err, disease) => {
       if (err) {
         return next(err);
