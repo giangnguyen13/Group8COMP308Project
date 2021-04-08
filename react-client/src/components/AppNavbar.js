@@ -9,6 +9,8 @@ function AppNavbar(props) {
   const [isPatient, setPatient] = useState(false);
   const [isNurse, setNurse] = useState(false);
 
+  const patientID = sessionStorage.getItem("patientId");
+
   const currentUrl = window.location.pathname;
   let homeRoute = currentUrl.includes("/patient")
     ? "/patient"
@@ -102,9 +104,19 @@ function AppNavbar(props) {
                 Motivation Video
               </Nav.Link>
               <Nav.Link href={`${homeRoute}/dailyInfo`}>
-                Daily Information
+                Enter Vital Signs
+              </Nav.Link>
+              <Nav.Link href={`${homeRoute}/listAllDailyInfoById/` + patientID}>
+                List Vital Signs
               </Nav.Link>
               <Nav.Link href={`${homeRoute}/checklist`}>Check List</Nav.Link>
+            </>
+          )}
+          {isNurse && (
+            <>
+              <Nav.Link href={`${homeRoute}/listPatients`}>
+                List of Patients
+              </Nav.Link>
             </>
           )}
         </Nav>

@@ -4,9 +4,12 @@ var router = express.Router();
 const indexController = require('../controllers/index.server.controller');
 const patientController = require('../controllers/patient.server.controller');
 const nurseController = require('../controllers/nurse.server.controller');
+const dailyInfoController = require('../controllers/daily_Info.server.controller');
+
 
 const PATIENT_API = '/api/patient';
 const NURSE_API = '/api/nurse';
+const API = '/api';
 
 // Define the routes module' method
 module.exports = function (app) {
@@ -36,4 +39,14 @@ module.exports = function (app) {
     app.route(NURSE_API + '/tip')
         .get(nurseController.getListMotivationalTip)
         .post(nurseController.createMotivationalTip);
+
+    app.route(API + '/dailyInfo')
+    .post(dailyInfoController.saveDailyInfo);
+    
+    app.route(NURSE_API + '/listPatients')
+        .get(patientController.list);
+    
+    app.param('patientId', patientController.listAllDailyInfoById);
+    app.route(API + '/listAllDailyInfoById/:patientId')
+    .get(patientController.listAllDailyInfoById)
 };

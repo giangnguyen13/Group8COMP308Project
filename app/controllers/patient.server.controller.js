@@ -1,6 +1,8 @@
 // Load the module dependencies
 const Patient = require("mongoose").model("Patient");
 const Video = require("mongoose").model("Video");
+const DailyInfo = require("mongoose").model("DailyInfo");
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("../../config/config");
@@ -89,6 +91,18 @@ exports.list = function (req, res, next) {
       return res.status(500).json(err);
     } else {
       res.json(patients);
+    }
+  });
+};
+
+exports.listAllDailyInfoById = function (req, res, next, patientId) {
+  var query = { patient: patientId };
+
+  DailyInfo.find(query, function (err, dailyInfos) {
+    if (err) {
+      return res.status(500).json(err);
+    } else {
+      res.json(dailyInfos);
     }
   });
 };
