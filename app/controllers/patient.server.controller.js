@@ -148,8 +148,9 @@ exports.showVideo = function (req, res) {
 //populate checkList page to the patient
 exports.checkList = function(req,res){
   const symptoms = require("../../symptoms.json"); // list of symptoms
-  res.render('checklist', { 
-    title:"checklist", symptoms:symptoms});	
+  // res.render('checklist', { 
+  //   title:"checklist", symptoms:symptoms});	
+  res.json(symptoms);
 
 }
 
