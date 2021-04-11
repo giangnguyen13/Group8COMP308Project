@@ -48,13 +48,17 @@ function CheckList() {
   };
 
   const submitDiagnose = () => {
-    axios.post(apiUrl, symtomList).then((res) => {
-      console.log("return data", res.data);
-      setResult(res.data);
-      if (res.data == null) {
-        alert("No data, please try again");
-      }
-    });
+    if (symtomList.length == 0) {
+      alert("Please select symtom");
+    } else {
+      axios.post(apiUrl, symtomList).then((res) => {
+        console.log("return data", res.data);
+        setResult(res.data);
+        if (res.data == null) {
+          alert("No data, please try again");
+        }
+      });
+    }
   };
 
   const resetResult = () => {
