@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 const config = require("../../config/config");
 const jwtExpirySeconds = 300;
 const jwtKey = config.secretKey;
-var C45 = require('c4.5');
+var C45 = require("c4.5");
 
 exports.newPatient = function (req, res) {
   let data = {
@@ -111,7 +111,6 @@ exports.listAllDailyInfoById = function (req, res, next, patientId) {
 
 // Returns all videos in db
 exports.listVideos = function (req, res, next) {
-  
   // get all video in db, sort it by title in ascending order
   Video.find()
     .sort({ title: "ascending" })
@@ -146,49 +145,41 @@ exports.showVideo = function (req, res) {
 };
 
 //populate checkList page to the patient
-exports.checkList = function(req,res){
+exports.checkList = function (req, res) {
   const symptoms = require("../../symptoms.json"); // list of symptoms
-  // res.render('checklist', { 
-  //   title:"checklist", symptoms:symptoms});	
+  // res.render('checklist', {
+  //   title:"checklist", symptoms:symptoms});
   res.json(symptoms);
-
-}
+};
 
 exports.diagnose = function (req, res, next) {
-    
-  var testData = Array(133).fill('FALSE');
-  
-  for(var data in req.body) {
-    console.log(data);
-    if(!isNaN(data))
-    {
-        testData[data-1]='TRUE';
-    }
-  }
-  
+  console.log(req.body);
+  const symtomArr = req.body;
+  console.log(symtomArr);
+  var testData = Array(133).fill("FALSE");
+  symtomArr.forEach((index) => {
+    testData[index - 1] = "TRUE";
+    console.log("inedx", index - 1);
+  });
+
   var c45 = C45();
-  var state = require('../../decision-tree-model.json');
+  var state = require("../../decision-tree-model.json");
   c45.restore(state);
   var model = c45.getModel();
-  
+
   var result = model.classify(testData);
   console.log(result);
-  if(result=='unknown') {
+  if (result == "unknown") {
     res.json(null);
-  }
-  else {
+  } else {
     Diagnosis.findOne({ disease: result }, (err, disease) => {
       if (err) {
         return next(err);
       } else {
-        console.log(disease)
-        var jsonDisease = JSON.parse(JSON.stringify(disease));            
+        console.log(disease);
+        var jsonDisease = JSON.parse(JSON.stringify(disease));
         res.json(jsonDisease);
       }
     });
   }
-
-}
-
-
-
+};
