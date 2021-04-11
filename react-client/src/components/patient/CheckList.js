@@ -44,12 +44,14 @@ function CheckList() {
 
     // newSymtomList[e.target.id] = e.target.checked ? e.target.id : null;
     setSymtomList(newSymtomList);
+    console.log(symtomList);
   };
 
   const submitDiagnose = () => {
     axios.post(apiUrl, symtomList).then((res) => {
+      console.log("return data", res.data);
       setResult(res.data);
-      if (res.data) {
+      if (res.data == null) {
         alert("No data, please try again");
       }
     });
