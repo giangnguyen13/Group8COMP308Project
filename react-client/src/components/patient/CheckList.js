@@ -23,10 +23,8 @@ function CheckList() {
     axios
       .get(apiUrl)
       .then((res) => {
-        console.log("list", res.data);
         setchkList(res.data);
         setLoading(false);
-        console.log("set", isLoading);
       })
       .catch((err) => {
         console.error("error", err);
@@ -36,17 +34,24 @@ function CheckList() {
   const onSymtomChange = (e) => {
     e.persist();
     // setPatient({ ...symtomList, [e.target.name]: e.target.checked });
-    console.log(e.target.checked);
     let newSymtomList = symtomList;
-    newSymtomList[e.target.id] = e.target.checked ? "TRUE" : null;
+    if (e.target.checked) {
+      newSymtomList.push(e.target.id);
+    } else {
+      const myIndex = newSymtomList.indexOf(e.target.id);
+      newSymtomList.splice(myIndex, 1);
+    }
+
+    // newSymtomList[e.target.id] = e.target.checked ? e.target.id : null;
     setSymtomList(newSymtomList);
-    console.log("new symtoms", newSymtomList);
   };
 
   const submitDiagnose = () => {
     axios.post(apiUrl, symtomList).then((res) => {
-      console.log(res);
       setResult(res.data);
+      if (res.data) {
+        alert("No data, please try again");
+      }
     });
   };
 
