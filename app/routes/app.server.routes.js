@@ -61,5 +61,13 @@ module.exports = function (app) {
 
     app.route(PATIENT_API+'/emergency')
         .post(patientController.createEmergencyAlert);
+    
+    app.route(NURSE_API+'/emergency/:nurseId')
+        .get(nurseController.getListEmergencyAlert);
+
+    app.param("nurseId", nurseController.nurseById);
+
+
+    
 
 };
