@@ -11,13 +11,14 @@ function EmergencyAlarm() {
   const [emergencyList, setEmergencyList] = useState([]);
   const nurseId = sessionStorage.getItem("nurseId");
   useEffect(() => {
-    // fetchEmergencyList()
+    fetchEmergencyList();
   }, []);
 
   const fetchEmergencyList = () => {
     axios.get(emergencyListApiUrl + nurseId).then((res) => {
       console.log(res.data);
       setEmergencyList(res.data);
+      setLoading(false);
     });
   };
 
@@ -44,7 +45,7 @@ function EmergencyAlarm() {
             {/* Check box start */}
             {emergencyList.map((emergencyItem, index) => (
               <tr>
-                <td>{index}</td>
+                <td>{index + 1}</td>
                 <td>{emergencyItem.message}</td>
                 <td>{emergencyItem.name}</td>
                 <td>{emergencyItem.created}</td>

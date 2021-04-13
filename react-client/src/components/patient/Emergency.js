@@ -45,7 +45,7 @@ function Emergency() {
     };
     console.log("createEmergencyAlert", data);
     axios.post(emergencyApi, data);
-    alert("Emergency Alert has been sent" + data.toString());
+    alert("Emergency Alert has been sent");
   };
 
   const onChange = (e) => {
