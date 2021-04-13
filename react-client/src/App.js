@@ -27,7 +27,7 @@ import NurseHomePage from "./components/nurse/NurseHomePage";
 import Emergency from "./components/patient/Emergency";
 import ListPatients from "./components/patient/ListPatients";
 import ListDailyInfo from "./components/patient/ListDailyInfo";
-
+import CreateTip from "./components/nurse/CreateTip";
 
 const PATIENT_ROUTE_PREFIX = "/patient";
 const NURSE_ROUTE_PREFIX = "/nurse";
@@ -109,9 +109,7 @@ function App() {
               isUserAuthenticated() ? (
                 <ListDailyInfo />
               ) : (
-                <NotLoginScreen
-                  route={`${PATIENT_ROUTE_PREFIX}/login`}
-                />
+                <NotLoginScreen route={`${PATIENT_ROUTE_PREFIX}/login`} />
               )
             }
             path={`${PATIENT_ROUTE_PREFIX}/listAllDailyInfoById/:patientId`}
@@ -141,6 +139,20 @@ function App() {
               )
             }
             path={`${NURSE_ROUTE_PREFIX}/listPatients`}
+          />
+          <Route
+            exact
+            render={() =>
+              isUserAuthenticated() ? (
+                <CreateTip />
+              ) : (
+                <NotLoginScreen
+                  route={`${NURSE_ROUTE_PREFIX}/login`}
+                  userRole="Nurse"
+                />
+              )
+            }
+            path={`${NURSE_ROUTE_PREFIX}/CreateTip`}
           />
           <Route
             exact

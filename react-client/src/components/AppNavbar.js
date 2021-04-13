@@ -117,6 +117,7 @@ function AppNavbar(props) {
               <Nav.Link href={`${homeRoute}/listPatients`}>
                 List of Patients
               </Nav.Link>
+              <Nav.Link href={`${homeRoute}/CreateTip`}>Creaete Tip</Nav.Link>
             </>
           )}
         </Nav>
