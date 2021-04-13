@@ -4,6 +4,7 @@ var router = express.Router();
 const indexController = require('../controllers/index.server.controller');
 const patientController = require('../controllers/patient.server.controller');
 const nurseController = require('../controllers/nurse.server.controller');
+const trainController = require('../controllers/train_model.server.controller');
 const dailyInfoController = require('../controllers/daily_Info.server.controller');
 
 
@@ -29,13 +30,14 @@ module.exports = function (app) {
     app.route(NURSE_API + '/login').post(nurseController.authenticate);
 
     //populate list of videos
-    app.route(PATIENT_API + '/videos').get(patientController.listVideos);
+    app.route(PATIENT_API + '/videos')
+        .get(patientController.listVideos);
+        
+    app.route(PATIENT_API+'/videos/:videoId')
+        .get(patientController.showVideo);
 
-    app.route(PATIENT_API + '/videos/:videoId').get(
-        patientController.showVideo
-    );
+    app.param("videoId", patientController.videoById);
 
-    app.param('videoId', patientController.videoById);
     app.route(NURSE_API + '/tip')
         .get(nurseController.getListMotivationalTip)
         .post(nurseController.createMotivationalTip);
@@ -49,4 +51,12 @@ module.exports = function (app) {
     app.param('patientId', patientController.listAllDailyInfoById);
     app.route(API + '/listAllDailyInfoById/:patientId')
     .get(patientController.listAllDailyInfoById)
+
+    app.route("/train")
+        .get(trainController.trainModel);
+    
+    app.route(PATIENT_API+'/checklist')
+        .get(patientController.checkList)
+        .post(patientController.diagnose);
+
 };
