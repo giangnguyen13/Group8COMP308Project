@@ -1,6 +1,7 @@
 // Load the module dependencies
 const Nurse = require('mongoose').model('Nurse');
 const MotivationalTip = require('mongoose').model('MotivationalTip');
+const EmergencyAlert = require("mongoose").model("EmergencyAlert");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('../../config/config');
@@ -114,6 +115,7 @@ exports.getListMotivationalTip = function (req, res) {
         now.getMonth(),
         now.getDate()
     );
+
     let patientname = req.query.patientname;
     const query = {
         created: { $gte: startOfToday },
@@ -129,4 +131,45 @@ exports.getListMotivationalTip = function (req, res) {
             res.status(200).json(tips);
         }
     });
+};
+
+exports.getListEmergencyAlert = function (req, res) {
+    
+    var now = new Date();
+    var startOfToday = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate()
+    );
+    let nurseid = req.nurse.id;
+    console.log(nurseid);
+    const query = {
+        created: { $gte: startOfToday },
+        nurse: nurseid
+    };
+  
+    EmergencyAlert.find(query).sort('-created').exec((err, alert)=> {
+        if (err) {
+            return res.status(500).json(err);
+        } else {
+            res.status(200).json(alert);
+        }
+    });
+  };
+
+
+  exports.nurseById = function (req, res, next, id) {
+	Nurse.findOne({
+        _id: id
+	}, (err, nurse) => {
+		if (err) {
+			// Call the next middleware with an error message
+			return next(err);
+		} else {
+			// Set the 'req.user' property
+            req.nurse = nurse;
+			// Call the next middleware
+			next();
+		}
+	});
 };
