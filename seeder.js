@@ -8,13 +8,13 @@ var Nurse = require('./app/models/nurse.server.model');
 var Patient = require('./app/models/patient.server.model');
 
 const nurses = [
-    { firstName: 'Ibrahim', lastName: 'Ali', username: 'aIbrahim', password: '$2b$10$CQwCxe/5fTo5P.w47tlf/eV0Y2hWdUrH1zoib4Vdwq469lelrjmBC' },
-    { firstName: 'Hyunjong', lastName: 'Shin', username: 'sHyunjong', password: '$2b$10$CQwCxe/5fTo5P.w47tlf/eV0Y2hWdUrH1zoib4Vdwq469lelrjmBC' },
+    { firstName: 'Ibrahim', lastName: 'Ali', username: 'aIbrahim', password: '$2b$10$CQwCxe/5fTo5P.w47tlf/eV0Y2hWdUrH1zoib4Vdwq469lelrjmBC' }, //password: 123123123
+    { firstName: 'Hyunjong', lastName: 'Shin', username: 'sHyunjong', password: '$2b$10$CQwCxe/5fTo5P.w47tlf/eV0Y2hWdUrH1zoib4Vdwq469lelrjmBC' }, //password: 123123123
 ];
 
 const patients = [
-    { firstName: 'Giang', lastName: 'Nguyen', email: 'giang.nguyen@email.com', password: '$2b$10$CQwCxe/5fTo5P.w47tlf/eV0Y2hWdUrH1zoib4Vdwq469lelrjmBC' },
-    { firstName: 'Deyoun', lastName: 'Lee', email: 'deyoun.lee@email.com', password: '$2b$10$CQwCxe/5fTo5P.w47tlf/eV0Y2hWdUrH1zoib4Vdwq469lelrjmBC' },
+    { firstName: 'Giang', lastName: 'Nguyen', email: 'giang.nguyen@email.com', password: '$2b$10$CQwCxe/5fTo5P.w47tlf/eV0Y2hWdUrH1zoib4Vdwq469lelrjmBC' }, //password: 123123123
+    { firstName: 'Deyoun', lastName: 'Lee', email: 'deyoun.lee@email.com', password: '$2b$10$CQwCxe/5fTo5P.w47tlf/eV0Y2hWdUrH1zoib4Vdwq469lelrjmBC' }, //password: 123123123
 ];
 
 
