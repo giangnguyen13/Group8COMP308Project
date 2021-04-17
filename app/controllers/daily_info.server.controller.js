@@ -17,6 +17,18 @@ exports.saveDailyInfo = function (req, res) {
     });
 };
 
+exports.listAllDailyInfoById = function (req, res, next, patientId) {
+    var query = { patient: patientId };
+
+    DailyInfo.find(query, function (err, dailyInfos) {
+        if (err) {
+        return res.status(500).json(err);
+        } else {
+        res.json(dailyInfos);
+        }
+    });
+};
+
 exports.requiredVitalSigns = function (req, res) {
     let data = {
         ...req.body,

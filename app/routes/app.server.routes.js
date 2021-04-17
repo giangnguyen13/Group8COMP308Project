@@ -13,53 +13,24 @@ const API = '/api';
 
 // Define the routes module' method
 module.exports = function (app) {
-    //handle a get request made to root path
+
     app.get('/', indexController.render); //go to http://localhost:3000/
+
     app.get('/logout', indexController.signout);
+
     app.route(PATIENT_API + 's')
         .get(patientController.list)
         .post(patientController.newPatient);
 
     app.route(PATIENT_API + '/login').post(patientController.authenticate);
 
-    app.route(NURSE_API + 's')
-        .get(nurseController.list)
-        .post(nurseController.newNurse);
-
-    app.route(NURSE_API + '/login').post(nurseController.authenticate);
-
-    //populate list of videos
     app.route(PATIENT_API + '/videos').get(patientController.listVideos);
+
+    app.param('videoId', patientController.videoById);
 
     app.route(PATIENT_API + '/videos/:videoId').get(
         patientController.showVideo
     );
-
-    app.param('videoId', patientController.videoById);
-
-    app.route(NURSE_API + '/tip')
-        .get(nurseController.getListMotivationalTip)
-        .post(nurseController.createMotivationalTip);
-
-    app.route(API + '/dailyInfo').post(dailyInfoController.saveDailyInfo);
-
-    app.route(NURSE_API + '/requiredVitalSigns').post(
-        dailyInfoController.requiredVitalSigns
-    );
-
-    app.route(NURSE_API + '/listPatients').get(patientController.list);
-
-    app.param('patientId', patientController.listAllDailyInfoById);
-    app.route(API + '/listAllDailyInfoById/:patientId').get(
-        patientController.listAllDailyInfoById
-    );
-
-    app.param('patientID', dailyInfoController.getRequiredVitalSigns);
-    app.route(NURSE_API + '/getRequiredVitalSigns/:patientID').get(
-        dailyInfoController.getRequiredVitalSigns
-    );
-
-    app.route('/train').get(trainController.trainModel);
 
     app.route(PATIENT_API + '/checklist')
         .get(patientController.checkList)
@@ -69,9 +40,44 @@ module.exports = function (app) {
         patientController.createEmergencyAlert
     );
 
-    app.route(NURSE_API + '/emergency/:nurseId').get(
-        nurseController.getListEmergencyAlert
+    app.route(NURSE_API + 's')
+        .get(nurseController.list)
+        .post(nurseController.newNurse);
+
+    app.route(NURSE_API + '/login').post(nurseController.authenticate);
+
+    app.route(NURSE_API + '/tip')
+        .get(nurseController.getListMotivationalTip)
+        .post(nurseController.createMotivationalTip);
+
+    app.route(NURSE_API + '/requiredVitalSigns').post(
+        dailyInfoController.requiredVitalSigns
+    );
+
+    app.route(NURSE_API + '/listPatients').get(patientController.list);
+
+    app.param('patientID', dailyInfoController.getRequiredVitalSigns);
+
+    app.route(NURSE_API + '/getRequiredVitalSigns/:patientID').get(
+        dailyInfoController.getRequiredVitalSigns
     );
 
     app.param('nurseId', nurseController.nurseById);
+
+    app.route(NURSE_API + '/emergency/:nurseId').get(
+        nurseController.getListEmergencyAlert
+    );
+    
+    //Shared between Nurses and Patients
+    app.route(API + '/dailyInfo').post(dailyInfoController.saveDailyInfo);
+
+    app.param('patientId', dailyInfoController.listAllDailyInfoById);
+
+    app.route(API + '/listAllDailyInfoById/:patientId').get(
+        dailyInfoController.listAllDailyInfoById
+    );
+
+    //AI
+    app.route('/train').get(trainController.trainModel);
+
 };
