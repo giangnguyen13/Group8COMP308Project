@@ -87,6 +87,7 @@ function DailyInfo() {
                         <Form.Control
                             type='number'
                             name='pulseRate'
+                            min="0"
                             id='pulseRate'
                             placeholder='Enter pulse rate'
                             value={dailyInfo.pulseRate}
@@ -105,6 +106,7 @@ function DailyInfo() {
                         <Form.Control
                             type='number'
                             name='bloodPressure'
+                            min="0"
                             id='bloodPressure'
                             placeholder='Enter blood pressure'
                             value={dailyInfo.bloodPressure}
@@ -123,6 +125,7 @@ function DailyInfo() {
                         <Form.Control
                             type='number'
                             name='weight'
+                            min="0"
                             id='weight'
                             placeholder='Enter weight'
                             value={dailyInfo.weight}
@@ -141,6 +144,7 @@ function DailyInfo() {
                         <Form.Control
                             type='number'
                             name='temperature'
+                            min="0"
                             id='temperature'
                             placeholder='Enter temperature'
                             value={dailyInfo.temperature}
@@ -159,6 +163,7 @@ function DailyInfo() {
                         <Form.Control
                             type='number'
                             name='respiratoryRate'
+                            min="0"
                             id='respiratoryRate'
                             placeholder='Enter respiratory rate'
                             value={dailyInfo.respiratoryRate}

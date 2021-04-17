@@ -8,6 +8,13 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 function Emergency() {
+  const currentUrl = window.location.pathname;
+  let homeRoute = currentUrl.includes('/patient')
+      ? '/patient'
+      : currentUrl.includes('/nurse')
+      ? '/nurse'
+      : '/';
+
   const nurseListApi = "http://localhost:5000/api/nurses";
   const emergencyApi = "http://localhost:5000/api/patient/emergency";
   const patientId = sessionStorage.getItem("patientId");
@@ -44,8 +51,12 @@ function Emergency() {
       nurse: alertForm.nurse,
     };
     console.log("createEmergencyAlert", data);
-    axios.post(emergencyApi, data);
-    alert("Emergency Alert has been sent");
+    axios
+      .post(emergencyApi, data)
+      .then((result) => {
+        setLoading(false);
+      window.location.href = `${homeRoute}/home`;
+    }).catch((error) => setLoading(false));
   };
 
   const onChange = (e) => {

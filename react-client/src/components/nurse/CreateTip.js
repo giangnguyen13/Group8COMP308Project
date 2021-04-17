@@ -6,6 +6,13 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 function CreateTip() {
+    const currentUrl = window.location.pathname;
+    let homeRoute = currentUrl.includes('/patient')
+        ? '/patient'
+        : currentUrl.includes('/nurse')
+        ? '/nurse'
+        : '/';
+        
     const [tip, setTip] = useState({
         title: '',
         content: '',
@@ -28,6 +35,7 @@ function CreateTip() {
             .post(apiUrl, data)
             .then((result) => {
                 setShowLoading(false);
+                window.location.href = `${homeRoute}/home`;
             })
             .catch((error) => setShowLoading(false));
     };
