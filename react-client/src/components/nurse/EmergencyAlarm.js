@@ -32,6 +32,7 @@ function EmergencyAlarm() {
           <span className="sr-only">Loading...</span>
         </Spinner>
       ) : (
+        <><h1>Emergency Message List</h1>
         <Table striped bordered hover size="sm">
           <thead>
             <tr>
@@ -54,6 +55,7 @@ function EmergencyAlarm() {
             {/* Check box end */}
           </tbody>
         </Table>
+        </>
       )}
     </>
   );

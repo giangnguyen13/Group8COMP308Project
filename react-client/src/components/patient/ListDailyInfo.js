@@ -44,7 +44,18 @@ function ListDailyInfo(props) {
                 </Spinner>
             )}
             <div className="text-center">
-                <a className="btn btn-success" href={`${homeRoute}/dailyInfo`}>Enter Today's Vital Signs</a> 
+                
+                {homeRoute ==  "/nurse" ? (
+                    <div className="row text-center pt-3">
+                        <div className="col-6 text-right"><a className="btn btn-success" href={`${homeRoute}/requiredVitalSigns`}>Enter Required Vital Signs</a> </div>
+                        <div className="col-6 text-left"><a className="btn btn-success" href={`${homeRoute}/dailyInfo`}>Enter Today's Vital Signs</a> </div>
+                    </div>
+                ) : (
+                    <div className="row pt-3">
+                        <div className="col-12"><a className="btn btn-success" href={`${homeRoute}/dailyInfo`}>Enter Today's Vital Signs</a> </div>
+                    </div>
+                )}
+
                 <br></br>
                 <br></br>
                 {data.map((item, idx) => (
