@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-
 //create model to save motivational videos for patients
 const DiagnoseSchema = new Schema({
     disease: String,
     description: String,
     consult_to_doctor: String,
-    precautions: [{
-        type: String
-    }]
-
+    precautions: [
+        {
+            type: String,
+        },
+    ],
 });
 
-mongoose.model('Diagnose', DiagnoseSchema);
+module.exports = mongoose.model('Diagnose', DiagnoseSchema);
