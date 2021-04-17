@@ -31,6 +31,7 @@
     },
     "scripts": {
         "start": "nodemon server",
-        "dev": "nodemon server"
+        "dev": "nodemon server",
+        "seed": "nodemon seeder"
     }
 }
