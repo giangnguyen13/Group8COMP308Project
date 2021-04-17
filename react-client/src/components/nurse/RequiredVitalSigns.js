@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from "react";
 import { isUserAuthenticated } from "../../Helper";
 import { Redirect } from "react-router-dom";
 import Jumbotron from "react-bootstrap/Jumbotron";
@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { apiUrl } from "../../Helper";
 
-function DailyInfo() {
+function RequiredVitalSigns() {
   
   const currentUrl = window.location.pathname;
   let homeRoute = currentUrl.includes("/patient")
@@ -15,41 +15,24 @@ function DailyInfo() {
   : currentUrl.includes("/nurse")
   ? "/nurse"
   : "/";
-  
+
+  const checkboxState = {
+    isTrue: true,
+    isFalse: false
+  };
+
   const patientID = sessionStorage.getItem("patientId");
   const created_by = sessionStorage.getItem("created_by");
-  
-  const [data, setData] = useState([]);
-  const [showLoading, setShowLoading] = useState(true);
-  const [listError, setListError] = useState(false);
+
   const [dailyInfo, setDailyInfo] = useState({
-    pulseRate: "",
-    bloodPressure: "",
-    weight: "",
-    temperature: "",
-    respiratoryRate: "",
+    pulseRate: false,
+    bloodPressure: false,
+    weight: false,
+    temperature: false,
+    respiratoryRate: false
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-        axios
-            .get(apiUrl + `nurse/getRequiredVitalSigns/${patientID}`)
-            .then((result) => {
-
-              console.log('result.data:', result.data);
-
-              setShowLoading(false);
-              setData(result.data);
-            })
-            .catch((error) => {
-                console.log('error in fetchData:', error);
-                setListError(true);
-            });
-    };
-      fetchData();
-  }, []);
-
-  const saveDailyInfo = () => {
+  const saveRequiredVitalSigns = () => {
     const data = {
       pulseRate: dailyInfo.pulseRate,
       bloodPressure: dailyInfo.bloodPressure,
@@ -61,11 +44,11 @@ function DailyInfo() {
     };
 
     axios
-      .post(`${apiUrl}dailyInfo`, data)
+      .post(`${apiUrl}nurse/requiredVitalSigns`, data)
       .then((res) => {
         console.log(res);
         window.location.href = `${homeRoute}/home`;
-      })
+    })
       .catch((err) => {
         console.log(err);
       });
@@ -73,69 +56,70 @@ function DailyInfo() {
 
   const onChange = (e) => {
     e.persist();
+    
     setDailyInfo({ ...dailyInfo, [e.target.name]: e.target.value });
   };
   return (
     <>
       <Jumbotron>
-        <Form onSubmit={saveDailyInfo}>
+        <Form onSubmit={saveRequiredVitalSigns}>
           <Form.Group>
-            <Form.Label>Pulse Rate {homeRoute ==  "/patient" ? (data.pulseRate == true ? "(Required)" : "(Not Required)") : null}</Form.Label>
+            <Form.Label>Pulse Rate</Form.Label>
             <Form.Control
-              type="number"
+              type="checkbox"
               name="pulseRate"
               id="pulseRate"
               placeholder="Enter pulse rate"
-              value={dailyInfo.pulseRate}
+              value={checkboxState.isTrue}
               onChange={onChange}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Blood Pressure {homeRoute ==  "/patient" ? (data.bloodPressure == true ? "(Required)" : "(Not Required)") : null}</Form.Label>
+            <Form.Label>Blood Pressure</Form.Label>
             <Form.Control
-              type="number"
+              type="checkbox"
               name="bloodPressure"
               id="bloodPressure"
+              value={checkboxState.isTrue}
               placeholder="Enter blood pressure"
-              value={dailyInfo.bloodPressure}
               onChange={onChange}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Weight {homeRoute ==  "/patient" ? (data.weight == true ? "(Required)" : "(Not Required)") : null}</Form.Label>
+            <Form.Label>Weight</Form.Label>
             <Form.Control
-              type="number"
+              type="checkbox"
               name="weight"
               id="weight"
+              value={checkboxState.isTrue}
               placeholder="Enter weight"
-              value={dailyInfo.weight}
               onChange={onChange}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Temperature {homeRoute ==  "/patient" ? (data.temperature == true ? "(Required)" : "(Not Required)") : null}</Form.Label>
+            <Form.Label>Temperature</Form.Label>
             <Form.Control
-              type="number"
+              type="checkbox"
               name="temperature"
               id="temperature"
+              value={checkboxState.isTrue}
               placeholder="Enter temperature"
-              value={dailyInfo.temperature}
               onChange={onChange}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Respiratory Rate {homeRoute ==  "/patient" ? (data.respiratoryRate == true ? "(Required)" : "(Not Required)") : null}</Form.Label>
+            <Form.Label>Respiratory Rate</Form.Label>
             <Form.Control
-              type="number"
+              type="checkbox"
               name="respiratoryRate"
               id="respiratoryRate"
+              value={checkboxState.isTrue}
               placeholder="Enter respiratory rate"
-              value={dailyInfo.respiratoryRate}
               onChange={onChange}
             />
           </Form.Group>
           <Button variant="success" type="submit">
-            Create Vital Signs
+            Create Required Vital Signs
           </Button>
         </Form>
       </Jumbotron>
@@ -143,4 +127,4 @@ function DailyInfo() {
   );
 }
 
-export default DailyInfo;
+export default RequiredVitalSigns;

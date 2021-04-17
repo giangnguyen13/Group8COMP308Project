@@ -20,14 +20,14 @@ import PatientHomePage from "./components/patient/PatientHomePage";
 import VideoList from "./components/patient/VideoList";
 import DailyInfo from "./components/patient/DailyInfo";
 import CheckList from "./components/patient/CheckList";
-
-import NurseLogin from "./components/nurse/NurseLogin";
-import CreateNurse from "./components/nurse/CreateNurse";
-import NurseHomePage from "./components/nurse/NurseHomePage";
 import Emergency from "./components/patient/Emergency";
 import ListPatients from "./components/patient/ListPatients";
 import ListDailyInfo from "./components/patient/ListDailyInfo";
 
+import NurseLogin from "./components/nurse/NurseLogin";
+import CreateNurse from "./components/nurse/CreateNurse";
+import NurseHomePage from "./components/nurse/NurseHomePage";
+import RequiredVitalSigns from "./components/nurse/RequiredVitalSigns";
 
 const PATIENT_ROUTE_PREFIX = "/patient";
 const NURSE_ROUTE_PREFIX = "/nurse";
@@ -141,6 +141,20 @@ function App() {
               )
             }
             path={`${NURSE_ROUTE_PREFIX}/listPatients`}
+          />
+          <Route
+            exact
+            render={() =>
+              isUserAuthenticated() ? (
+                <RequiredVitalSigns />
+              ) : (
+                <NotLoginScreen
+                  route={`${NURSE_ROUTE_PREFIX}/login`}
+                  userRole="Nurse"
+                />
+              )
+            }
+            path={`${NURSE_ROUTE_PREFIX}/requiredVitalSigns`}
           />
           <Route
             exact

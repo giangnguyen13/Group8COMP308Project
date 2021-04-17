@@ -16,12 +16,13 @@ module.exports = function () {
             console.log('Error');
         });
 
-    // Load model
+    // Load models
     require('../app/models/nurse.server.model');
     require('../app/models/patient.server.model');
     require('../app/models/video.server.model');
     require('../app/models/motivational_tip.server.model');
     require('../app/models/daily_info.server.model');
+    require('../app/models/required_vital_signs.server.model');
 
     // Return the Mongoose connection instance
     return db;

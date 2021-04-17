@@ -42,6 +42,9 @@ module.exports = function (app) {
 
     app.route(API + '/dailyInfo')
     .post(dailyInfoController.saveDailyInfo);
+
+    app.route(NURSE_API + '/requiredVitalSigns')
+    .post(dailyInfoController.requiredVitalSigns);
     
     app.route(NURSE_API + '/listPatients')
         .get(patientController.list);
@@ -49,4 +52,8 @@ module.exports = function (app) {
     app.param('patientId', patientController.listAllDailyInfoById);
     app.route(API + '/listAllDailyInfoById/:patientId')
     .get(patientController.listAllDailyInfoById)
+    
+    app.param('patientID', dailyInfoController.getRequiredVitalSigns);
+    app.route(NURSE_API + '/getRequiredVitalSigns/:patientID')
+    .get(dailyInfoController.getRequiredVitalSigns)
 };
