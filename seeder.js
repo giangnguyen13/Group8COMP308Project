@@ -4,6 +4,19 @@ mongoose.connect('mongodb://localhost/health-app');
 
 var Video = require('./app/models/video.server.model');
 var Diagnose = require('./app/models/diagnose.server.model');
+var Nurse = require('./app/models/nurse.server.model');
+var Patient = require('./app/models/patient.server.model');
+
+const nurses = [
+    { firstName: 'Ibrahim', lastName: 'Ali', username: 'aIbrahim', password: '$2b$10$CQwCxe/5fTo5P.w47tlf/eV0Y2hWdUrH1zoib4Vdwq469lelrjmBC' },
+    { firstName: 'Hyunjong', lastName: 'Shin', username: 'sHyunjong', password: '$2b$10$CQwCxe/5fTo5P.w47tlf/eV0Y2hWdUrH1zoib4Vdwq469lelrjmBC' },
+];
+
+const patients = [
+    { firstName: 'Giang', lastName: 'Nguyen', email: 'giang.nguyen@email.com', password: '$2b$10$CQwCxe/5fTo5P.w47tlf/eV0Y2hWdUrH1zoib4Vdwq469lelrjmBC' },
+    { firstName: 'Deyoun', lastName: 'Lee', email: 'deyoun.lee@email.com', password: '$2b$10$CQwCxe/5fTo5P.w47tlf/eV0Y2hWdUrH1zoib4Vdwq469lelrjmBC' },
+];
+
 
 const videos = [
     { title: 'Cardiac Rehabilitation Exercises', url: 'Ohm56pv85A0' },
@@ -490,6 +503,8 @@ const diagnoses = [
 let myPromise = new Promise(function (myResolve, myReject) {
     Video.insertMany(videos, function (error, docs) {});
     Diagnose.insertMany(diagnoses, function (error, docs) {});
+    Nurse.insertMany(nurses, function (error, docs) {});
+    Patient.insertMany(patients, function (error, docs) {});
 });
 
 myPromise.then(

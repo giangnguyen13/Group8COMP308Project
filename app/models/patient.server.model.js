@@ -71,4 +71,4 @@ PatientSchema.set('toJSON', {
     virtuals: true,
 });
 
-mongoose.model('Patient', PatientSchema);
+module.exports = mongoose.model('Patient', PatientSchema);

@@ -70,4 +70,4 @@ NurseSchema.set('toJSON', {
     virtuals: true,
 });
 
-mongoose.model('Nurse', NurseSchema);
+module.exports = mongoose.model('Nurse', NurseSchema);
