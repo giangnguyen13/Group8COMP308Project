@@ -2,7 +2,7 @@
 const Patient = require("mongoose").model("Patient");
 const Video = require("mongoose").model("Video");
 const DailyInfo = require("mongoose").model("DailyInfo");
-
+const EmergencyAlert = require("mongoose").model("EmergencyAlert");
 const Diagnosis = require("mongoose").model("Diagnose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -182,4 +182,20 @@ exports.diagnose = function (req, res, next) {
       }
     });
   }
+};
+
+exports.createEmergencyAlert = function (req, res) {
+  let data = {
+      ...req.body
+  };
+  var newEmergencyAlert = new EmergencyAlert(data);
+  
+  newEmergencyAlert.save(function (err) {
+      if (err) {
+          console.log(err);
+          return res.status(500).json(err);
+      } else {
+          res.status(200).json(newEmergencyAlert);
+      }
+  });
 };
