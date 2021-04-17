@@ -1,11 +1,15 @@
 // Load the module dependencies
 const Patient = require("mongoose").model("Patient");
 const Video = require("mongoose").model("Video");
+const DailyInfo = require("mongoose").model("DailyInfo");
+const EmergencyAlert = require("mongoose").model("EmergencyAlert");
+const Diagnosis = require("mongoose").model("Diagnose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("../../config/config");
 const jwtExpirySeconds = 300;
 const jwtKey = config.secretKey;
+var C45 = require("c4.5");
 
 exports.newPatient = function (req, res) {
   let data = {
@@ -93,9 +97,20 @@ exports.list = function (req, res, next) {
   });
 };
 
+exports.listAllDailyInfoById = function (req, res, next, patientId) {
+  var query = { patient: patientId };
+
+  DailyInfo.find(query, function (err, dailyInfos) {
+    if (err) {
+      return res.status(500).json(err);
+    } else {
+      res.json(dailyInfos);
+    }
+  });
+};
+
 // Returns all videos in db
 exports.listVideos = function (req, res, next) {
-  console.log("listVideos called");
   // get all video in db, sort it by title in ascending order
   Video.find()
     .sort({ title: "ascending" })
@@ -103,7 +118,6 @@ exports.listVideos = function (req, res, next) {
       if (err) {
         return res.status(500).json(err);
       } else {
-        console.log(videos);
         res.json(videos);
       }
     });
@@ -119,8 +133,6 @@ exports.videoById = function (req, res, next, id) {
       if (!video) return next(new Error("Failed to load Video " + id));
 
       req.video = video;
-      console.log("in videoById:", req.video.title);
-      console.log("in videoById:", req.video.url);
       next();
     });
 };
@@ -130,4 +142,60 @@ exports.showVideo = function (req, res) {
   const video = req.video;
   console.log(video.title);
   res.json(video);
+};
+
+//populate checkList page to the patient
+exports.checkList = function (req, res) {
+  const symptoms = require("../../symptoms.json"); // list of symptoms
+  // res.render('checklist', {
+  //   title:"checklist", symptoms:symptoms});
+  res.json(symptoms);
+};
+
+exports.diagnose = function (req, res, next) {
+  console.log(req.body);
+  const symtomArr = req.body;
+  console.log(symtomArr);
+  var testData = Array(133).fill("FALSE");
+  symtomArr.forEach((index) => {
+    testData[index - 1] = "TRUE";
+    console.log("inedx", index - 1);
+  });
+
+  var c45 = C45();
+  var state = require("../../decision-tree-model.json");
+  c45.restore(state);
+  var model = c45.getModel();
+
+  var result = model.classify(testData);
+  console.log(result);
+  if (result == "unknown") {
+    res.json(null);
+  } else {
+    Diagnosis.findOne({ disease: result }, (err, disease) => {
+      if (err) {
+        return next(err);
+      } else {
+        console.log(disease);
+        var jsonDisease = JSON.parse(JSON.stringify(disease));
+        res.json(jsonDisease);
+      }
+    });
+  }
+};
+
+exports.createEmergencyAlert = function (req, res) {
+  let data = {
+      ...req.body
+  };
+  var newEmergencyAlert = new EmergencyAlert(data);
+  
+  newEmergencyAlert.save(function (err) {
+      if (err) {
+          console.log(err);
+          return res.status(500).json(err);
+      } else {
+          res.status(200).json(newEmergencyAlert);
+      }
+  });
 };

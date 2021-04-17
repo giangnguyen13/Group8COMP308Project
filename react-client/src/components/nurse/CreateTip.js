@@ -4,11 +4,15 @@ import Spinner from 'react-bootstrap/Spinner';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownMultiselect from 'react-multiselect-dropdown-bootstrap';
 
 function CreateTip() {
+    const currentUrl = window.location.pathname;
+    let homeRoute = currentUrl.includes('/patient')
+        ? '/patient'
+        : currentUrl.includes('/nurse')
+        ? '/nurse'
+        : '/';
+        
     const [tip, setTip] = useState({
         title: '',
         content: '',
@@ -31,6 +35,7 @@ function CreateTip() {
             .post(apiUrl, data)
             .then((result) => {
                 setShowLoading(false);
+                window.location.href = `${homeRoute}/home`;
             })
             .catch((error) => setShowLoading(false));
     };

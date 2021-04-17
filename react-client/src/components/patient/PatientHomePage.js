@@ -33,6 +33,17 @@ function PatientHomePage() {
         <>
             {isUserAuthenticated() ? (
                 <div className='container App'>
+                    {tipList.length ? (
+                        <h1>
+                            Hello {patientName}, There is the tip from our
+                            nurses
+                        </h1>
+                    ) : (
+                        <h1>
+                            Hello {patientName}, there is no tip for you today
+                            yet
+                        </h1>
+                    )}
                     {tipList.map((tip, key) => {
                         const { title, content, sender } = tip;
                         return (

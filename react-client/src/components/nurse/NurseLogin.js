@@ -19,6 +19,8 @@ function NurseLogin() {
                 // maintain session in client
                 sessionStorage.setItem('nurseName', res.data.nurseName);
                 sessionStorage.setItem('nurseId', res.data.nurseId);
+                sessionStorage.setItem('created_by', "Nurse: " + res.data.nurseName);
+
                 var sessionCreated = new Date();
                 var sessionExpired = new Date(
                     sessionCreated.getTime() + 5 * 60000
