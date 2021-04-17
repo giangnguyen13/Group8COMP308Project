@@ -79,7 +79,7 @@ function DailyInfo() {
                         <Form.Label>
                             Pulse Rate{' '}
                             {homeRoute == '/patient'
-                                ? data.pulseRate == true
+                                ? data?.pulseRate == true
                                     ? '(Required)'
                                     : '(Not Required)'
                                 : null}
@@ -98,7 +98,7 @@ function DailyInfo() {
                         <Form.Label>
                             Blood Pressure{' '}
                             {homeRoute == '/patient'
-                                ? data.bloodPressure == true
+                                ? data?.bloodPressure == true
                                     ? '(Required)'
                                     : '(Not Required)'
                                 : null}
@@ -117,7 +117,7 @@ function DailyInfo() {
                         <Form.Label>
                             Weight{' '}
                             {homeRoute == '/patient'
-                                ? data.weight == true
+                                ? data?.weight == true
                                     ? '(Required)'
                                     : '(Not Required)'
                                 : null}
@@ -136,7 +136,7 @@ function DailyInfo() {
                         <Form.Label>
                             Temperature{' '}
                             {homeRoute == '/patient'
-                                ? data.temperature == true
+                                ? data?.temperature == true
                                     ? '(Required)'
                                     : '(Not Required)'
                                 : null}
@@ -155,7 +155,7 @@ function DailyInfo() {
                         <Form.Label>
                             Respiratory Rate{' '}
                             {homeRoute == '/patient'
-                                ? data.respiratoryRate == true
+                                ? data?.respiratoryRate == true
                                     ? '(Required)'
                                     : '(Not Required)'
                                 : null}
